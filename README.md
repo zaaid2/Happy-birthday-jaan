@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For My Amazing Girlfriend ❤️</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            text-align: center;
+            color: white;
+            z-index: 100;
+            position: relative;
+        }
+
+        .heart {
+            position: relative;
+            width: 120px;
+            height: 108px;
+            margin: 0 auto 30px;
+            animation: heartbeat 1.2s infinite;
+            cursor: pointer;
+        }
+
+        .heart:before, .heart:after {
+            position: absolute;
+            content: "";
+            left: 60px;
+            top: 0;
+            width: 60px;
+            height: 96px;
+            background: #ff4d6d;
+            border-radius: 60px 60px 0 0;
+            transform: rotate(-45deg);
+            transform-origin: 0 100%;
+            transition: all 0.3s ease;
+        }
+
+        .heart:after {
+            left: 0;
+            transform: rotate(45deg);
+            transform-origin: 100% 100%;
+        }
+
+        .heart:hover:before, .heart:hover:after {
+            background: #ff1e4d;
+            transform: rotate(-45deg) scale(1.1);
+        }
+
+        .heart:hover:after {
+            transform: rotate(45deg) scale(1.1);
+        }
+
+        @keyframes heartbeat {
+            0% { transform: scale(1); }
+            25% { transform: scale(1.1); }
+            50% { transform: scale(1); }
+            75% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        h1 {
+            font-size: 3.5em;
+            margin-bottom: 20px;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.3);
+        }
+
+        .message {
+            font-size: 1.4em;
+            margin-bottom: 30px;
+            line-height: 1.6;
+            background: rgba(255,255,255,0.1);
+            padding: 20px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .secret-btn {
+            background: linear-gradient(45deg, #ff4d6d, #ff8fa3);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.2em;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 20px rgba(255, 77, 109, 0.4);
+            margin: 10px;
+        }
+
+        .secret-btn:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 10px 25px rgba(255, 77, 109, 0.6);
+        }
+
+        .floating-hearts {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .floating-heart {
+            position: absolute;
+            font-size: 24px;
+            animation: float 6s linear infinite;
+            opacity: 0.7;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .hidden-message {
+            display: none;
+            margin-top: 30px;
+            padding: 20px;
+            background: rgba(255,255,255,0.95);
+            color: #333;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .memory {
+            background: rgba(255,255,255,0.1);
+            margin: 10px 0;
+            padding: 15px;
+            border-radius: 10px;
+            border-left: 4px solid #ff4d6d;
+        }
+    </style>
+</head>
+<body>
+    <div class="floating-hearts" id="heartsContainer"></div>
+    
+    <div class="container">
+        <div class="heart" onclick="revealSecrets()"></div>
+        <h1>Happy Birthday, <span id="herName">Beautiful</span>! 🎂</h1>
+        
+        <div class="message">
+            <p>I wanted to create something as unique and special as you are. 💝</p>
+            <p>So I wrote you some code instead of just a card!</p>
+        </div>
+
+        <button class="secret-btn" onclick="showMemories()">💖 Our Memories</button>
+        <button class="secret-btn" onclick="showLoveLetter()">💌 Love Letter</button>
+        <button class="secret-btn" onclick="startFireworks()">🎆 Celebration!</button>
+
+        <div id="hiddenContent"></div>
+    </div>
+
+    <script>
+        // Type her name with cool effect
+        function typeWriter(element, text, speed = 150) {
+            let i = 0;
+            element.innerHTML = '';
+            function type() {
+                if (i < text.length) {
+                    element.innerHTML += text.charAt(i);
+                    i++;
+                    setTimeout(type, speed);
+                }
+            }
+            type();
+        }
+
+        // Create floating hearts
+        function createFloatingHearts() {
+            const hearts = ['❤️', '💕', '💖', '💗', '💓', '💞'];
+            const container = document.getElementById('heartsContainer');
+            
+            setInterval(() => {
+                const heart = document.createElement('div');
+                heart.className = 'floating-heart';
+                heart.innerHTML = hearts[Math.floor(Math.random() * hearts.length)];
+                heart.style.left = Math.random() * 100 + 'vw';
+                heart.style.fontSize = (Math.random() * 20 + 20) + 'px';
+                heart.style.animationDuration = (Math.random() * 3 + 4) + 's';
+                container.appendChild(heart);
+                
+                // Remove heart after animation
+                setTimeout(() => {
+                    heart.remove();
+                }, 7000);
+            }, 300);
+        }
+
+        // Secret functions
+        function showMemories() {
+            const content = `
+                <div class="hidden-message">
+                    <h3>💫 Our Special Memories</h3>
+                    <div class="memory">
+                        <strong>🎵 Our Song:</strong> [Your special song here]
+                    </div>
+                    <div class="memory">
+                        <strong>📍 First Date:</strong> [Where you first went out]
+                    </div>
+                    <div class="memory">
+                        <strong>😂 Inside Joke:</strong> [Your funny memory]
+                    </div>
+                    <div class="memory">
+                        <strong>🌟 Best Moment:</strong> [Your favorite memory together]
+                    </div>
+                </div>
+            `;
+            document.getElementById('hiddenContent').innerHTML = content;
+            document.getElementById('hiddenContent').style.display = 'block';
+        }
+
+        function showLoveLetter() {
+            const content = `
+                <div class="hidden-message">
+                    <h3>💌 My Dearest [Her Name],</h3>
+                    <p>You're the best thing that ever happened to me. Every day with you feels like finding the perfect solution to the most complex problem. ❤️</p>
+                    <p>You make my heart compile without any errors, and my life run smoother than optimized code.</p>
+                    <p>Happy Birthday to the most amazing girlfriend in the world!</p>
+                    <p style="text-align: right; margin-top: 20px;">Forever yours,<br><strong>[Your Name]</strong></p>
+                </div>
+            `;
+            document.getElementById('hiddenContent').innerHTML = content;
+            document.getElementById('hiddenContent').style.display = 'block';
+        }
+
+        function startFireworks() {
+            const colors = ['#ff4d6d', '#ff8fa3', '#667eea', '#764ba2', '#f093fb'];
+            for(let i = 0; i < 50; i++) {
+                setTimeout(() => {
+                    const firework = document.createElement('div');
+                    firework.style.position = 'fixed';
+                    firework.style.left = Math.random() * 100 + 'vw';
+                    firework.style.top = Math.random() * 100 + 'vh';
+                    firework.style.width = '8px';
+                    firework.style.height = '8px';
+                    firework.style.background = colors[Math.floor(Math.random() * colors.length)];
+                    firework.style.borderRadius = '50%';
+                    firework.style.boxShadow = '0 0 20px currentColor';
+                    firework.style.animation = `explode 1s ease-out forwards`;
+                    document.body.appendChild(firework);
+                    
+                    setTimeout(() => firework.remove(), 1000);
+                }, i * 100);
+            }
+            
+            // Add explosion animation
+            if (!document.getElementById('fireworks-style')) {
+                const style = document.createElement('style');
+                style.id = 'fireworks-style';
+                style.textContent = `
+                    @keyframes explode {
+                        0% { transform: scale(1); opacity: 1; }
+                        100% { transform: scale(12); opacity: 0; }
+                    }
+                `;
+                document.head.appendChild(style);
+            }
+        }
+
+        function revealSecrets() {
+            const messages = [
+                "You're my favorite bug to fix 🐛❤️",
+                "My heart segfaults when I see you 💘",
+                "You're more responsive than my best API ⚡",
+                "I'd never git push without you 💻",
+                "You make my heart run at O(1) complexity 🚀"
+            ];
+            alert(messages[Math.floor(Math.random() * messages.length)]);
+        }
+
+        // Initialize everything when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            typeWriter(document.getElementById('herName'), '[Her Name]');
+            createFloatingHearts();
+            
+            // Add some initial hearts
+            for(let i = 0; i < 15; i++) {
+                setTimeout(() => {
+                    const heart = document.createElement('div');
+                    heart.className = 'floating-heart';
+                    heart.innerHTML = '❤️';
+                    heart.style.left = Math.random() * 100 + 'vw';
+                    heart.style.fontSize = (Math.random() * 25 + 15) + 'px';
+                    heart.style.animationDuration = (Math.random() * 4 + 3) + 's';
+                    document.getElementById('heartsContainer').appendChild(heart);
+                }, i * 200);
+            }
+        });
+    </script>
+</body>
+</html>
